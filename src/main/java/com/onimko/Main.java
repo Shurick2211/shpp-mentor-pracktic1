@@ -28,6 +28,7 @@ public class Main {
         }
     }
 
+
     public static String getProperty(String inProp) {
         InputStream rootPath = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream(FILE_PROP);
