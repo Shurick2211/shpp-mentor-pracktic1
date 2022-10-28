@@ -11,17 +11,27 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * The Main class for App.
+ */
 public class Main {
+    /**The logger for App*/
     static final Logger log = LoggerFactory.getLogger(Main.class);
+    /**The key for getting value*/
     static final String KEY_PROP = "username";
+    /**The name of property-file*/
     static final String FILE_PROP = "hello.xml";
 
+    /**
+     * The start method.
+     * @param args The command for App ("-json" or "-xml").
+     */
     public static void main(String[] args) {
         String conf = "";
         if (args.length > 0) conf = args[0];
         else {
-            System.out.println("Try again! No comand for result (\"-xml\" or \"-json\")!");
-            log.warn("No comand for result!");
+            System.out.println("Try again! No command for result (\"-xml\" or \"-json\")!");
+            log.warn("No command for result!");
             System.exit(1);
         }
         Message message = new Message("Привіт " + getProperty(KEY_PROP) + "!");
@@ -36,7 +46,11 @@ public class Main {
         }
     }
 
-
+    /**
+     * The method for get property's value for an input key.
+     * @param inProp - the input key.
+     * @return the value.
+     */
     public static String getProperty(String inProp) {
         InputStream rootPath = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream(FILE_PROP);
@@ -52,20 +66,28 @@ public class Main {
         return outProp;
     }
 
+    /**
+     * The method for getting the serialized string with an input config.
+     * @param msg the input object of POJO-class.
+     * @param conf the input string config.
+     * @return the result string.
+     * @throws IOException the Exception for process of serialize
+     * and creating the result's file.
+     */
     public static String getResultString (Message msg, String conf) throws IOException {
-        String result = "Try again! Wrong comand!";
-        if (conf.equals("-xml")) {
+        String result = "Try again! Wrong command!";
+        if (conf.equals("-xml") || conf.equals("-x")) {
             log.info("Needs XML");
             XmlMapper xmlMapper = new XmlMapper();
             result = xmlMapper.writeValueAsString(msg);
             xmlMapper.writeValue(new File("output.xml"),msg);
         } else
-        if (conf.equals("-json")) {
+        if (conf.equals("-json") || conf.equals("-j")) {
             log.info("Needs Json");
             ObjectMapper mapper = new ObjectMapper();
             result = mapper.writeValueAsString(msg);
             mapper.writeValue(new File("output.json"),msg);
-        } else log.warn("Wrong comand!");
+        } else log.warn("Wrong command!");
         return result;
     }
 }
