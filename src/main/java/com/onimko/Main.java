@@ -19,11 +19,19 @@ public class Main {
     public static void main(String[] args) {
         String conf = "";
         if (args.length > 0) conf = args[0];
+        else {
+            System.out.println("Try again! No comand for result (\"-xml\" or \"-json\")!");
+            log.warn("No comand for result!");
+            System.exit(1);
+        }
         Message message = new Message("Привіт " + getProperty(KEY_PROP) + "!");
         try {
             System.out.println(getResultString(message, conf));
         } catch (JsonProcessingException e) {
             log.error("Can't create JSON");
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            log.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -44,18 +52,20 @@ public class Main {
         return outProp;
     }
 
-    public static String getResultString (Message msg, String conf) throws JsonProcessingException {
-        String result = "Try again! Wrong args!";
+    public static String getResultString (Message msg, String conf) throws IOException {
+        String result = "Try again! Wrong comand!";
         if (conf.equals("-xml")) {
             log.info("Needs XML");
             XmlMapper xmlMapper = new XmlMapper();
             result = xmlMapper.writeValueAsString(msg);
-        }
+            xmlMapper.writeValue(new File("output.xml"),msg);
+        } else
         if (conf.equals("-json")) {
             log.info("Needs Json");
             ObjectMapper mapper = new ObjectMapper();
             result = mapper.writeValueAsString(msg);
-        }
+            mapper.writeValue(new File("output.json"),msg);
+        } else log.warn("Wrong comand!");
         return result;
     }
 }

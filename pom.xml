@@ -53,7 +53,9 @@
         <profile>
             <id>fat</id>
             <properties>
-                <env.current>jar-with-dependencies</env.current>
+                <env.current>
+                  kkk
+                </env.current>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -61,22 +63,25 @@
         </profile>
 
         <profile>
-            <id>thin</id>
+            <id>jar</id>
             <properties>
-                <env.current> </env.current>
+                <env.current>
+                    fff
+                </env.current>
             </properties>
         </profile>
     </profiles>
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptorRefs>
                         <descriptorRef>
-                            ${env.current}
+                            jar-with-dependencies
                         </descriptorRef>
                     </descriptorRefs>
                     <archive>
@@ -92,6 +97,29 @@
                         <goals>
                             <goal>single</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <plugin>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>shade</id>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>com.onimko.Main</mainClass>
+                                    <manifestEntries>
+                                        <Multi-Release>true</Multi-Release>
+                                    </manifestEntries>
+                                </transformer>
+                            </transformers>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
