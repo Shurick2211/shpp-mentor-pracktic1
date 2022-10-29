@@ -3,6 +3,7 @@ package com.onimko;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,11 +28,11 @@ public class Main {
      * @param args The command for App ("-json" or "-xml").
      */
     public static void main(String[] args) {
-        String conf = "";
-        if (args.length > 0) conf = args[0];
-        else {
-            System.out.println("Try again! No command for result (\"-xml\" or \"-json\")!");
-            log.warn("No command for result!");
+        String conf = System.getenv("file");
+        if (conf == null){
+            System.out.println("Try again! No system var for result "
+                + "(file=\"xml\" or file=\"json\")!");
+            log.warn("No system var for result!");
             System.exit(1);
         }
         Message message = new Message("Привіт " + getProperty(KEY_PROP) + "!");
@@ -75,14 +76,14 @@ public class Main {
      * and creating the result's file.
      */
     public static String getResultString (Message msg, String conf) throws IOException {
-        String result = "Try again! Wrong command!";
-        if (conf.equals("-xml") || conf.equals("-x")) {
+        String result = "Try again! Wrong system var!";
+        if (conf.equals("xml") || conf.equals("-x")) {
             log.info("Needs XML");
             XmlMapper xmlMapper = new XmlMapper();
             result = xmlMapper.writeValueAsString(msg);
             xmlMapper.writeValue(new File("output.xml"),msg);
         } else
-        if (conf.equals("-json") || conf.equals("-j")) {
+        if (conf.equals("json") || conf.equals("-j")) {
             log.info("Needs Json");
             ObjectMapper mapper = new ObjectMapper();
             result = mapper.writeValueAsString(msg);
