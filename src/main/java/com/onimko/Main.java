@@ -28,7 +28,7 @@ public class Main {
      * @param args The command for App ("-json" or "-xml").
      */
     public static void main(String[] args) {
-        String conf = System.getenv("file");
+        String conf = System.getProperty("file");
         if (conf == null){
             System.out.println("Try again! No system var for result "
                 + "(file=\"xml\" or file=\"json\")!");
