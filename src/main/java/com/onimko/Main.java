@@ -24,7 +24,7 @@ public class Main {
 
     /**
      * The start method.
-     * @param args The command for App ("-json" or "-xml").
+     * @param args The command for App ( "-json" or "-xml" ).
      */
     public static void main(String[] args) {
         String conf = "";
