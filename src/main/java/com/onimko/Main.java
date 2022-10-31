@@ -27,6 +27,7 @@ public class Main {
      * @param args The command for App ( "-json" or "-xml" ).
      */
     public static void main(String[] args) {
+        //check push
         String conf = "";
         if (args.length > 0) conf = args[0];
         else {
