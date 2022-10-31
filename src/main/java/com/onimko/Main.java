@@ -25,13 +25,13 @@ public class Main {
 
     /**
      * The start method.
-     * @param args The command for App ("-json" or "-xml").
+     * @param args The command for App ("json" or "xml").
      */
     public static void main(String[] args) {
         String conf = System.getProperty("file");
         if (conf == null){
             System.out.println("Try again! No system var for result "
-                + "(file=\"xml\" or file=\"json\")!");
+                + "(-Dfile=xml or -Dfile=json)!");
             log.warn("No system var for result!");
             System.exit(1);
         }
