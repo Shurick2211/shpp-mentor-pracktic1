@@ -31,19 +31,17 @@ public class Main {
 
         String conf = System.getProperty("file");
         if (conf == null){
-            System.out.println("Try again! No system var for result "
-                + "(-Dfile=xml or -Dfile=json)!");
-            log.warn("No system var for result!");
+            log.warn("Try again! No system var for result (-Dfile=xml or -Dfile=json)!");
             System.exit(1);
         }
         Message message = new Message("Привіт " + getProperty(KEY_PROP) + "!");
         try {
-            System.out.println(getResultString(message, conf));
+            log.info(getResultString(message, conf));
         } catch (JsonProcessingException e) {
-            log.error("Can't create JSON");
+            log.error("Can't create JSON", e);
             throw new RuntimeException(e);
         } catch (IOException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
             throw new RuntimeException(e);
         }
     }
@@ -60,11 +58,11 @@ public class Main {
         try {
             xmlProps.loadFromXML(rootPath);
         } catch (IOException e) {
-            log.error("File " + FILE_PROP + " not found!");
+            log.error("File {} not found!", FILE_PROP, e);
             throw new RuntimeException(e);
         }
         String outProp = xmlProps.getProperty(inProp);
-        log.debug("Property was reading: " + inProp + "=" + outProp);
+        log.debug("Property was reading: {}={} ", inProp, outProp);
         return outProp;
     }
 
