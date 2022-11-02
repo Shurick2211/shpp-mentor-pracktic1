@@ -5,6 +5,7 @@
   <formats>
     <format>zip</format>
   </formats>
+
   <dependencySets>
     <dependencySet>
       <outputDirectory>/dependency</outputDirectory>
@@ -25,7 +26,6 @@
       </includes>
       <outputDirectory>/</outputDirectory>
     </fileSet>
-
   </fileSets>
 
   <files>
@@ -35,4 +35,5 @@
       <filtered>false</filtered>
     </file>
   </files>
+
 </assembly>

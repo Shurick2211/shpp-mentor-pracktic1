@@ -101,6 +101,9 @@
                                     <classpathPrefix>dependency/</classpathPrefix>
                                     <mainClass>com.onimko.Main</mainClass>
                                 </manifest>
+                                <manifestEntries>
+                                    <Class-Path>. config/</Class-Path>
+                                </manifestEntries>
                             </archive>
                         </configuration>
                     </plugin>

@@ -3,6 +3,8 @@ package com.onimko;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import java.io.FileInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,14 +56,14 @@ public class Main {
     public static String getProperty(String inProp) {
         InputStream rootPath = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream(FILE_PROP);
-        Properties xmlProps = new Properties();
+        Properties props = new Properties();
         try {
-            xmlProps.loadFromXML(rootPath);
+            props.loadFromXML(rootPath);
         } catch (IOException e) {
             log.error("File {} not found!", FILE_PROP, e);
             throw new RuntimeException(e);
         }
-        String outProp = xmlProps.getProperty(inProp);
+        String outProp = props.getProperty(inProp);
         log.debug("Property was reading: {}={} ", inProp, outProp);
         return outProp;
     }
